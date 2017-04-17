@@ -1,0 +1,16 @@
+sudo: false
+language: node_js
+cache:
+  directories:
+    - node_modules
+node_js:
+  - '6'
+before_install:
+  - npm i -g npm@3
+  - npm i -g now
+  - cat "{\"email\": \"carlosvillu@gmail.com\", \"token\": \"$NOW_TOKEN\"}" > ~/.now.json
+after_success:
+  - npm run deploy
+branches:
+  only:
+    - master
