@@ -1,0 +1,53 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "lint": "npm run -s lint:js",
+    "lint:js": "linting-rules js --ignore-pattern public --ignore-pattern material-ui-scrolling-techniques --fix",
+    "start": "PORT=2017 suistudio-webpack dev",
+    "deploy": "NODE_ENV=production suistudio-webpack build -C && now && now alias $(pbpaste) blog.aralescriptura.cat",
+    "now-start": "serve ./public -s"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@schibstedspain/linting-rules": "1.5.0",
+    "@schibstedspain/suistudio-webpack": "2.6.0",
+    "serve": "5.1.4"
+  },
+  "dependencies": {
+    "@schibstedspain/rosetta": "3.10.1",
+    "@schibstedspain/sui-image-lazy-load": "1.4.0",
+    "classnames": "2.2.5",
+    "material-ui": "0.17.4",
+    "prop-types": "15.5.8",
+    "react": "15.5.4",
+    "react-addons-shallow-compare": "15.5.2",
+    "react-dom": "15.5.4",
+    "react-media": "1.5.1",
+    "react-router-dom": "4.1.1",
+    "react-tap-event-plugin": "2.0.1",
+    "reset-css": "2.2.0"
+  },
+  "suistudio-webpack": {
+    "vendor": [
+      "classnames",
+      "material-ui",
+      "react",
+      "react-addons-shallow-compare",
+      "react-dom",
+      "react-media",
+      "react-router-dom",
+      "react-tap-event-plugin"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "./node_modules/@schibstedspain/linting-rules/eslintrc.js"
+    ]
+  },
+  "sasslintConfig": "./node_modules/@schibstedspain/linting-rules/sass-lint.yml"
+}

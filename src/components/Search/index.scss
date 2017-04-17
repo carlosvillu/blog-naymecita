@@ -1,0 +1,34 @@
+.Search {
+  margin: 10px 0;
+
+  &-InputWrapper {
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+    margin: 0 5px;
+    padding: 5px;
+  }
+
+  &-Input {
+    &:focus {
+      outline: none;
+    }
+
+    background-color: transparent;
+    border: 0px solid;
+    padding: 10px;
+    width: 80%;
+  }
+
+  &-AdvancedWrapper {
+    display: none;
+    margin: 0 5px;
+    padding: 5px;
+
+    &--isExpanded {
+      display: block;
+      margin-top: 5px;
+    }
+  }
+}
+
