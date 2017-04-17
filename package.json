@@ -8,7 +8,8 @@
     "lint:js": "linting-rules js --ignore-pattern public --ignore-pattern material-ui-scrolling-techniques --fix",
     "start": "PORT=2017 suistudio-webpack dev",
     "deploy": "NODE_ENV=production suistudio-webpack build -C && now && now alias $(pbpaste) blog.aralescriptura.cat",
-    "now-start": "serve ./public -s"
+    "now-start": "serve ./public -s",
+    "co": "npm run -s lint && git commit"
   },
   "keywords": [],
   "author": "",
