@@ -8,7 +8,7 @@ node_js:
 before_install:
   - npm i -g npm@3
   - npm i -g now
-  - cat "{\"email\": \"carlosvillu@gmail.com\", \"token\": \"$NOW_TOKEN\"}" > ~/.now.json
+  - echo "{\"email\": \"carlosvillu@gmail.com\", \"token\": \"\${NOW_TOKEN}\"}" > ~/.now.json
 after_success:
   - npm run deploy
 branches:
