@@ -4,7 +4,7 @@ import {GridList, GridTile} from 'material-ui/GridList'
 import Media from 'react-media'
 import ImageLazyLoad from '@schibstedspain/sui-image-lazy-load'
 
-import '@schibstedspain/sui-image-lazy-load/lib/index.scss'
+// import '@schibstedspain/sui-image-lazy-load/lib/index.scss'
 
 const MQ = {maxWidth: 768}
 const IMAGES = Array.apply(null, Array(90))

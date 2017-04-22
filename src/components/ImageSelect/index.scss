@@ -1,0 +1,37 @@
+.ImageSelect {
+  &-Label {
+    padding: 15px;
+  }
+
+  &-Paper {
+    align-items: center;
+    display: flex;
+    left: 2px;
+    padding: 15px;
+    position: relative;
+    justify-content: center;
+    width: 95%;
+  }
+
+  &-Claim {
+    color: rgba(0, 0, 0, 0.298039);
+    margin-left: 5px;
+  }
+
+  &-Input {
+    display: none;
+  }
+
+  &-ImageWrapper {
+    position: relative;
+  }
+
+  &-Remove {
+    background-color: white;
+    left: 90%;
+    position: absolute;
+    top: 5px;
+  }
+
+  
+}

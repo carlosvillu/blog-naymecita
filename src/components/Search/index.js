@@ -9,7 +9,7 @@ import ExpandLess from 'material-ui/svg-icons/navigation/expand-less'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
-import './index.scss'
+// import './index.scss'
 
 const GRADES = [
   {literal: 'GRADE_2', grade: 2},

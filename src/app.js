@@ -1,26 +1,24 @@
 import 'reset-css/reset.css'
+import './app.scss'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import { AppContainer } from 'react-hot-loader'
-import Rosetta from '@schibstedspain/rosetta'
-import Polyglot from '@schibstedspain/rosetta/lib/adapters/polyglot'
 
-import literals from './literals'
+import Provider from './components/Provider'
+import i18n from './literals'
 import Root from './components/Root'
-
-const DEFAULT_CULTURE = 'es-ES'
-const DEFAULT_CURRENCY = 'EUR'
-const i18n = new Rosetta({ adapter: new Polyglot() })
-i18n.languages = literals
-i18n.culture = DEFAULT_CULTURE
-i18n.currency = DEFAULT_CURRENCY
 
 const render = Component =>
   ReactDOM.render(
     <AppContainer>
-      <Component i18n={i18n} />
+      <Provider i18n={i18n}>
+        <Router>
+          <Component />
+        </Router>
+      </Provider>
     </AppContainer>,
     document.getElementById('root')
   )

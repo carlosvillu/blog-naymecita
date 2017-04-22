@@ -2,30 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
-import AppBar from '../material-ui-scrolling-techniques/AppBar'
-import AppCanvas, {Content} from '../material-ui-scrolling-techniques/AppCanvas'
+import { Route } from 'react-router-dom'
 
-import {
-  BrowserRouter as Router,
-  Route
-} from 'react-router-dom'
-
-import Provider from '../Provider'
 import Home from '../../pages/Home'
+import CreateSingle from '../../pages/CreateSingle'
+import CreateMultiples from '../../pages/CreateMultiples'
 
 const Root = ({i18n}) => (
-  <Provider i18n={i18n}>
-    <MuiThemeProvider>
-      <Router>
-        <AppCanvas scrollingTechniques>
-          <AppBar title={i18n.t('TITLE')} showMenuIconButton={false} />
-          <Content>
-            <Route exact path='/' component={Home} />
-          </Content>
-        </AppCanvas>
-      </Router>
-    </ MuiThemeProvider>
-  </Provider>
+  <MuiThemeProvider>
+    <div>
+      <Route exact path='/' component={Home} />
+      <Route path='/create/single' component={CreateSingle} />
+      <Route path='/create/multiples' component={CreateMultiples} />
+    </div>
+  </ MuiThemeProvider>
 )
 
 Root.displayName = 'Root'

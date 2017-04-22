@@ -7,5 +7,25 @@ export default {
   GRADE: 'Filtrar por curso',
   GRADE_2: '2º Primaria',
   GRADE_4: '4º Primaria',
-  GRADE_8: '2º ESO'
+  GRADE_8: '2º ESO',
+  FIRST_STEP_SINGLE: 'Datos personales',
+  SECOND_STEP_SINGLE: 'Sube una foto de tu texto',
+  THIRD_STEP_SINGLE: 'Título y descripción (Opcionales)',
+  FOURTH_STEP_SINGLE: 'Quieres compartir tus datos?!',
+  FIRST_STEP_MULTIPLE: 'Datos del profesor/ar y de la clase',
+  SECOND_STEP_MULTIPLE: 'Textos de los alumnos',
+  THIRD_STEP_MULTIPLE: 'Compartir datos de los alumnos',
+  LABEL_NAME_INPUT: 'Nombre',
+  LABEL_SURNAME_INPUT: 'Apellidos',
+  LABEL_SCHOOLS_SELECT: 'Escuela',
+  LABEL_GRADES_SELECT: 'Curso',
+  LABEL_CLASSES_SELECT: 'Clase',
+  LABEL_TITLE_INPUT: 'Título',
+  LABEL_DESCRIPTION_INPUT: 'Descripción',
+  WARNING_SINGLE_FORM: 'Acepto compartir mis datos personales con el retos de mis compañeros',
+  UPLOAD_PHOTO: 'Elige o haz una foto',
+  NEXT: 'Siguiente',
+  SAVE: 'Guardar',
+  BACK: 'Volver'
+
 }
