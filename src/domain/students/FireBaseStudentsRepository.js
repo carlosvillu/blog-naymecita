@@ -58,7 +58,13 @@ export default class FireBaseStudentsRepository extends StudentsRepository {
       image: imageStorage.downloadURL
     })
 
-    await firebase.database().ref(`students/${id}`).set(student)
+    await firebase.database().ref(`/students/${id}`).set(student)
     return student
+  }
+
+  async student ({id} = {}) {
+    const firebase = this._config.get('firebase')
+    const snapshot = await firebase.database().ref(`/students/${id}`).once('value')
+    return snapshot.val()
   }
 }

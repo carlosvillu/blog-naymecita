@@ -10,6 +10,7 @@ class Aralescriptura {
     this._map['config'] = this._config
 
     this._map['save_studients_use_case'] = StudentsFactory.saveStudentsUseCase()
+    this._map['get_studients_use_case'] = StudentsFactory.getStudentsUseCase()
   }
 
   get (key) {

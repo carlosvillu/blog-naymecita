@@ -1,12 +1,19 @@
 import config from '../config'
 
 import SaveStudentsUseCase from '../students/SaveStudentsUseCase'
+import GetStudentsUseCase from '../students/GetStudentsUseCase'
 
 import FireBaseStudentsRepository from '../students/FireBaseStudentsRepository'
 
 export default class StudentsFactory {
   static saveStudentsUseCase () {
     return new SaveStudentsUseCase({
+      repository: StudentsFactory.fireBaseStudentsRepository()
+    })
+  }
+
+  static getStudentsUseCase () {
+    return new GetStudentsUseCase({
       repository: StudentsFactory.fireBaseStudentsRepository()
     })
   }
