@@ -30,5 +30,6 @@ export default {
   ADD_STUDENT_DIALOG_TITLE: 'Agregar alumno',
   CANCEL: 'Cancelar',
   ADD_STUDENT: 'Añadir',
-  LOADING_STUDENT_DATA: 'Cargando'
+  LOADING_STUDENT_DATA: 'Cargando',
+  FORM_SAVED: 'Texto guardado'
 }

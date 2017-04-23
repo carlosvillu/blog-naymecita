@@ -16,6 +16,7 @@ import {
 
 import ImageSelect from '../ImageSelect'
 import ConsentToogle from '../ConsentToogle'
+import LoadingOverlay from '../LoadingOverlay'
 
 const SCHOOLS = [
   {name: 'Tierno Galben'},
@@ -36,10 +37,19 @@ const CLASSES = [
   {'letter': 'D'}
 ]
 
+// const STUDENT = {
+//   name: 'Carlos',
+//   surname: 'Villuendas',
+//   school: 'Tierno Galben',
+//   grade: '4º Primaria',
+//   letter: 'A'
+// }
+
 class SingleForm extends PureComponent {
   static displayName = 'SingleForm'
   static contextTypes = {
-    i18n: PropTypes.object
+    i18n: PropTypes.object,
+    domain: PropTypes.object
   }
   static propTypes = {
     schools: PropTypes.arrayOf(PropTypes.shape({
@@ -61,7 +71,7 @@ class SingleForm extends PureComponent {
   state = {
     consent: false,
     description: null,
-    finished: false,
+    displayOverlay: false,
     grade: null,
     image: false,
     letter: null,
@@ -75,7 +85,7 @@ class SingleForm extends PureComponent {
 
   render () {
     const {i18n} = this.context
-    const {stepIndex, image, snackMsg} = this.state
+    const {stepIndex, image, snackMsg, displayOverlay} = this.state
 
     return (
       <div className='SingleForm'>
@@ -118,6 +128,7 @@ class SingleForm extends PureComponent {
           message={i18n.t(snackMsg)}
           autoHideDuration={4000}
           onRequestClose={this.handleRequestClose} />
+        <LoadingOverlay display={displayOverlay} />
       </div>
     )
   }
@@ -203,14 +214,19 @@ class SingleForm extends PureComponent {
   }
 
   _handleNext = () => {
-    const {stepIndex} = this.state
+    const {stepIndex, name, surname, school, grade, letter, image, consent, title, description} = this.state
+    const {domain, i18n} = this.context
     this.setState({
       stepIndex: stepIndex + 1,
-      finished: stepIndex >= 3
+      displayOverlay: stepIndex >= 3
     })
 
     if (stepIndex === 3) {
-      this.setState({snackMsg: 'FORM_SAVED'})
+      domain.get('save_studients_use_case').execute({name, surname, school, grade, letter, image, consent, title, description})
+                                           .then(() => this.setState({
+                                             displayOverlay: false,
+                                             snackMsg: i18n.t('FORM_SAVED')
+                                           }))
     }
   }
 
