@@ -60,7 +60,8 @@ class SingleForm extends PureComponent {
     })),
     classes: PropTypes.arrayOf(PropTypes.shape({
       'letter': PropTypes.string
-    }))
+    })),
+    onCreateStudent: PropTypes.func
   }
   static defaultProps = {
     schools: SCHOOLS,
@@ -85,7 +86,8 @@ class SingleForm extends PureComponent {
 
   render () {
     const {i18n} = this.context
-    const {stepIndex, image, snackMsg, displayOverlay} = this.state
+    const {onCreateStudent} = this.props
+    const {stepIndex, image, snackMsg, displayOverlay, id} = this.state
 
     return (
       <div className='SingleForm'>
@@ -125,6 +127,8 @@ class SingleForm extends PureComponent {
         </Stepper>
         <Snackbar
           open={snackMsg}
+          action={id ? i18n.t('SEE') : false}
+          onActionTouchTap={() => id && onCreateStudent(id)}
           message={i18n.t(snackMsg)}
           autoHideDuration={4000}
           onRequestClose={this.handleRequestClose} />
@@ -223,10 +227,13 @@ class SingleForm extends PureComponent {
 
     if (stepIndex === 3) {
       domain.get('save_studients_use_case').execute({name, surname, school, grade, letter, image, consent, title, description})
-                                           .then(() => this.setState({
-                                             displayOverlay: false,
-                                             snackMsg: i18n.t('FORM_SAVED')
-                                           }))
+                                           .then(student => {
+                                             this.setState({
+                                               id: student.id,
+                                               displayOverlay: false,
+                                               snackMsg: i18n.t('FORM_SAVED')
+                                             })
+                                           })
     }
   }
 

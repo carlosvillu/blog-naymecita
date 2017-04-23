@@ -10,6 +10,7 @@
     "start": "PORT=2017 suistudio-webpack dev",
     "deploy": "npm run -s build && now && now alias $(pbpaste) blog.aralescriptura.cat",
     "now-start": "serve ./public -s",
+    "now-build": "true",
     "co": "npm run -s lint && git commit"
   },
   "keywords": [],

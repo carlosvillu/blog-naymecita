@@ -19,7 +19,7 @@ const CreateSingle = ({history}, {i18n}) => (
         }}
         title={i18n.t('TITLE')} />
       <Content>
-        <SingleForm />
+        <SingleForm onCreateStudent={id => history.push(`/detail/${id}`)} />
       </Content>
     </AppCanvas>
   </div>

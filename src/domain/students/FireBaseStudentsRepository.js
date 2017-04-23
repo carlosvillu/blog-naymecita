@@ -45,8 +45,7 @@ export default class FireBaseStudentsRepository extends StudentsRepository {
                                .ref()
                                .child(`${lowerName}_${lowerSurname}_${id}`)
                                .put(blob, {contentType: blob.type})
-
-    return firebase.database().ref(`students/${id}`).set(removeEmpty({
+    const student = removeEmpty({
       id,
       name,
       surname,
@@ -57,6 +56,9 @@ export default class FireBaseStudentsRepository extends StudentsRepository {
       title,
       description,
       image: imageStorage.downloadURL
-    }))
+    })
+
+    await firebase.database().ref(`students/${id}`).set(student)
+    return student
   }
 }

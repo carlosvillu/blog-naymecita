@@ -31,5 +31,6 @@ export default {
   CANCEL: 'Cancelar',
   ADD_STUDENT: 'Añadir',
   LOADING_STUDENT_DATA: 'Cargando',
-  FORM_SAVED: 'Texto guardado'
+  FORM_SAVED: 'Texto guardado',
+  SEE: 'Ver'
 }
