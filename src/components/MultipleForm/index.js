@@ -13,6 +13,10 @@ import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
+import StudentCard from '../StudentCard'
+import AddStudent from '../AddStudent'
+import ConsentToogle from '../ConsentToogle'
+
 const SCHOOLS = [
   {name: 'Tierno Galben'},
   {name: 'Pablo Picasso'},
@@ -31,6 +35,14 @@ const CLASSES = [
   {'letter': 'C'},
   {'letter': 'D'}
 ]
+
+const STUDENTS = Array.apply(null, new Array(2))
+  .map((_, index) =>
+    ({
+      name: `Naymecita ${index}`,
+      surname: 'Salitas',
+      image: `https://unsplash.it/4000/3000/?random&__c=${Math.random()}`
+    }))
 
 class MultipleForm extends PureComponent {
   static displayName = 'MultipleForm'
@@ -58,6 +70,7 @@ class MultipleForm extends PureComponent {
   }
 
   state = {
+    students: STUDENTS,
     consent: false,
     finished: false,
     grade: null,
@@ -86,6 +99,7 @@ class MultipleForm extends PureComponent {
           <Step>
             <StepLabel>{i18n.t('SECOND_STEP_MULTIPLE')}</StepLabel>
             <StepContent className='MultipleForm-FirstStepWrapper'>
+              {this._secondStep}
               {this._renderStepActions(1)}
             </StepContent>
           </Step>
@@ -93,11 +107,20 @@ class MultipleForm extends PureComponent {
           <Step>
             <StepLabel>{i18n.t('THIRD_STEP_MULTIPLE')}</StepLabel>
             <StepContent className='MultipleForm-FirstStepWrapper'>
+              {this._thirdStep}
               {this._renderStepActions(2)}
             </StepContent>
           </Step>
 
         </Stepper>
+        <AddStudent disabled={stepIndex !== 1} onStudentAdd={student => {
+          this.setState({
+            students: [
+              ...this.state.students,
+              student
+            ]
+          })
+        }} />
       </div>
     )
   }
@@ -142,6 +165,48 @@ class MultipleForm extends PureComponent {
     )
   }
 
+  get _secondStep () {
+    const {students} = this.state
+    return (
+      <div className='MultipleForm-SecondStep'>
+        {students.map(
+          ({name, surname, image}, index) =>
+            <StudentCard
+              onClickDelete={this._handleClickDeleteStudent(index)}
+              key={`${name}-${surname}`}
+              name={name}
+              surname={surname}
+              image={image} />
+        )}
+      </div>
+    )
+  }
+
+  get _thirdStep () {
+    const {i18n} = this.context
+    const {consent} = this.state
+
+    return (
+      <div className='MultipleForm-ThirdStep'>
+        <ConsentToogle
+          consent={consent}
+          onConsentChange={({consent}) => {
+            this.setState({consent})
+          }}
+          label={i18n.t('WARNING_SINGLE_FORM')} />
+      </div>
+    )
+  }
+
+  _handleClickDeleteStudent = index => () => {
+    this.setState({
+      students: [
+        ...this.state.students.slice(0, index),
+        ...this.state.students.slice(index + 1)
+      ]
+    })
+  }
+
   _handleChangeField = name => (event, index, value) => {
     this.setState({[name]: value || event.target.value})
   }
@@ -161,7 +226,17 @@ class MultipleForm extends PureComponent {
     }
   }
 
-  _shouldDisableAction = () => { return false }
+  _shouldDisableAction = step => {
+    const {name, surname, school, grade, letter, students} = this.state
+
+    if (step === 0) {
+      return !(name && surname && school && grade && letter)
+    }
+
+    if (step === 1) {
+      return students.length === 0
+    }
+  }
 
   _renderStepActions = step => {
     const {i18n} = this.context
@@ -170,7 +245,7 @@ class MultipleForm extends PureComponent {
     return (
       <div style={{margin: '12px 0'}}>
         <RaisedButton
-          label={i18n.t(stepIndex === 3 ? 'SAVE' : 'NEXT')}
+          label={i18n.t(stepIndex === 2 ? 'SAVE' : 'NEXT')}
           disabled={this._shouldDisableAction(step)}
           disableTouchRipple
           disableFocusRipple

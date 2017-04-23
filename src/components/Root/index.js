@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import { Route } from 'react-router-dom'
@@ -7,20 +6,19 @@ import { Route } from 'react-router-dom'
 import Home from '../../pages/Home'
 import CreateSingle from '../../pages/CreateSingle'
 import CreateMultiples from '../../pages/CreateMultiples'
+import Detail from '../../pages/Detail'
 
-const Root = ({i18n}) => (
+const Root = () => (
   <MuiThemeProvider>
     <div>
       <Route exact path='/' component={Home} />
       <Route path='/create/single' component={CreateSingle} />
       <Route path='/create/multiples' component={CreateMultiples} />
+      <Route path='/detail/:id' component={Detail} />
     </div>
   </ MuiThemeProvider>
 )
 
 Root.displayName = 'Root'
-Root.propTypes = {
-  i18n: PropTypes.object.isRequired
-}
 
 export default Root

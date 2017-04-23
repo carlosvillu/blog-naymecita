@@ -17,11 +17,13 @@ class ImageSelect extends PureComponent {
 
   static propTypes = {
     onChangeImage: PropTypes.func,
+    deletable: PropTypes.bool,
     image: PropTypes.object
   }
 
   static defaultProps = {
-    image: false
+    image: false,
+    deletable: true
   }
 
   constructor (props, context) {
@@ -44,13 +46,14 @@ class ImageSelect extends PureComponent {
 
   get _preview () {
     const {image} = this.state
+    const {deletable} = this.props
     return (
       <div className='ImageSelect-ImageWrapper'>
         <ImageLazyLoad aspectRatio={'4:3'} className='ImageSelect-Image' src={image} />
-        <Delete className='ImageSelect-Remove' onClick={() => {
+        {deletable && <Delete className='ImageSelect-Remove' onClick={() => {
           this.setState({image: false})
           this.props.onChangeImage({image: false})
-        }} />
+        }} />}
       </div>
     )
   }

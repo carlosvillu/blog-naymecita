@@ -1,0 +1,9 @@
+.ConsentToogle {
+  &-Toggle {
+    padding: 5px;
+
+    &--isActive {
+      background-color: rgba(244, 67, 54, 0.09);
+    }
+  }
+}

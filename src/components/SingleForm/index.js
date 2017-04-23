@@ -1,13 +1,11 @@
 import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
-import Toggle from 'material-ui/Toggle'
 import Snackbar from 'material-ui/Snackbar'
 import {
   Step,
@@ -17,8 +15,7 @@ import {
 } from 'material-ui/Stepper'
 
 import ImageSelect from '../ImageSelect'
-
-// import './index.scss'
+import ConsentToogle from '../ConsentToogle'
 
 const SCHOOLS = [
   {name: 'Tierno Galben'},
@@ -189,18 +186,12 @@ class SingleForm extends PureComponent {
     const {i18n} = this.context
     const {consent} = this.state
 
-    const classNameToggle = cx('SingleForm-Toggle', {
-      'SingleForm-Toggle--isActive': consent
-    })
-
     return (
       <div className='SingleForm-FourthStep'>
-        <Toggle
-          className={classNameToggle}
-          toggled={consent}
-          labelPosition='rigth'
-          onToggle={() => {
-            this.setState({consent: !this.state.consent})
+        <ConsentToogle
+          consent={consent}
+          onConsentChange={({consent}) => {
+            this.setState({consent})
           }}
           label={i18n.t('WARNING_SINGLE_FORM')} />
       </div>

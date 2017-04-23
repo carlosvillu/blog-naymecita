@@ -4,6 +4,8 @@ import {GridList, GridTile} from 'material-ui/GridList'
 import Media from 'react-media'
 import ImageLazyLoad from '@schibstedspain/sui-image-lazy-load'
 
+import {Link} from 'react-router-dom'
+
 // import '@schibstedspain/sui-image-lazy-load/lib/index.scss'
 
 const MQ = {maxWidth: 768}
@@ -20,7 +22,9 @@ const Grid = ({images = IMAGES}) => (
           <GridTile
             key={tile.img}
           >
-            <ImageLazyLoad aspectRatio={'16:9'} src={tile.img} />
+            <Link to={`/detail/${tile.id}`}>
+              <ImageLazyLoad aspectRatio={'16:9'} src={tile.img} />
+            </Link>
           </GridTile>
         ))}
       </GridList>

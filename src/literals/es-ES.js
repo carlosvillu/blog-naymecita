@@ -26,6 +26,9 @@ export default {
   UPLOAD_PHOTO: 'Elige o haz una foto',
   NEXT: 'Siguiente',
   SAVE: 'Guardar',
-  BACK: 'Volver'
-
+  BACK: 'Volver',
+  ADD_STUDENT_DIALOG_TITLE: 'Agregar alumno',
+  CANCEL: 'Cancelar',
+  ADD_STUDENT: 'Añadir',
+  LOADING_STUDENT_DATA: 'Cargando'
 }
