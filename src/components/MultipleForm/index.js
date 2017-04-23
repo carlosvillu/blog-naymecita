@@ -12,10 +12,12 @@ import FlatButton from 'material-ui/FlatButton'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import Snackbar from 'material-ui/Snackbar'
 
 import StudentCard from '../StudentCard'
 import AddStudent from '../AddStudent'
 import ConsentToogle from '../ConsentToogle'
+import LoadingOverlay from '../LoadingOverlay'
 
 const SCHOOLS = [
   {name: 'Tierno Galben'},
@@ -36,19 +38,12 @@ const CLASSES = [
   {'letter': 'D'}
 ]
 
-const STUDENTS = Array.apply(null, new Array(2))
-  .map((_, index) =>
-    ({
-      name: `Naymecita ${index}`,
-      surname: 'Salitas',
-      image: `https://unsplash.it/4000/3000/?random&__c=${Math.random()}`
-    }))
-
 class MultipleForm extends PureComponent {
   static displayName = 'MultipleForm'
 
   static contextTypes = {
-    i18n: PropTypes.object
+    i18n: PropTypes.object,
+    domain: PropTypes.object
   }
 
   static propTypes = {
@@ -70,9 +65,9 @@ class MultipleForm extends PureComponent {
   }
 
   state = {
-    students: STUDENTS,
+    students: [],
     consent: false,
-    finished: false,
+    displayOverlay: false,
     grade: null,
     letter: null,
     name: null,
@@ -83,7 +78,7 @@ class MultipleForm extends PureComponent {
   }
 
   render () {
-    const {stepIndex} = this.state
+    const {stepIndex, displayOverlay, snackMsg} = this.state
     const {i18n} = this.context
     return (
       <div className='MultipleForm'>
@@ -113,6 +108,11 @@ class MultipleForm extends PureComponent {
           </Step>
 
         </Stepper>
+        <Snackbar
+          open={!!snackMsg}
+          message={i18n.t(snackMsg || '')}
+          autoHideDuration={4000} />
+        <LoadingOverlay display={displayOverlay} />
         <AddStudent disabled={stepIndex !== 1} onStudentAdd={student => {
           this.setState({
             students: [
@@ -212,11 +212,33 @@ class MultipleForm extends PureComponent {
   }
 
   _handleNext = () => {
-    const {stepIndex} = this.state
+    const {stepIndex, students, consent, school, grade, letter} = this.state
+    const {domain, i18n} = this.context
     this.setState({
       stepIndex: stepIndex + 1,
-      finished: stepIndex >= 3
+      displayOverlay: stepIndex >= 2
     })
+
+    if (stepIndex === 2) {
+      const fullStudents = students.map(student => ({
+        ...student,
+        school,
+        grade,
+        consent,
+        letter
+      }))
+      Promise.all(
+        fullStudents.map(
+          student => domain.get('save_studients_use_case').execute(student)
+        )
+      ).then(students => {
+        console.log({students})
+        this.setState({
+          displayOverlay: false,
+          snackMsg: i18n.t('FORM_SAVED')
+        })
+      })
+    }
   }
 
   _handlePrev = () => {

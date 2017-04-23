@@ -130,8 +130,7 @@ class SingleForm extends PureComponent {
           action={id ? i18n.t('SEE') : false}
           onActionTouchTap={() => id && onCreateStudent(id)}
           message={i18n.t(snackMsg)}
-          autoHideDuration={4000}
-          onRequestClose={this.handleRequestClose} />
+          autoHideDuration={4000} />
         <LoadingOverlay display={displayOverlay} />
       </div>
     )

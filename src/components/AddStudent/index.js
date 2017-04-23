@@ -84,7 +84,7 @@ class AddStudent extends PureComponent {
         <TextField
           value={surname}
           onChange={this._handleChangeField('surname')}
-          floatingLabelText={!name ? i18n.t('LABEL_SURNAME_INPUT') : false} />
+          floatingLabelText={!surname ? i18n.t('LABEL_SURNAME_INPUT') : false} />
         <ImageSelect image={image} onChangeImage={({image}) => {
           this.setState({image})
         }} />
