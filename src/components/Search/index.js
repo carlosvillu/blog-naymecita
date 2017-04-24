@@ -16,7 +16,7 @@ const GRADES = [
   {literal: 'GRADE_8', grade: 8}
 ]
 
-const lengthTerm = length => fn => ({term, grade}) => term.length >= length ? fn({term, grade}) : null
+const lengthTerm = length => fn => ({term, grade}) => !term || term.length >= length ? fn({term, grade}) : null
 const lengthTermThree = lengthTerm(3)
 const debounce = (fn, delay) => {
   let timer
@@ -37,6 +37,11 @@ class Search extends PureComponent {
     isExpanded: false,
     term: null,
     grade: null
+  }
+
+  componentDidMount () {
+    const {term, grade} = this.state
+    this._search({term, grade})
   }
 
   render () {

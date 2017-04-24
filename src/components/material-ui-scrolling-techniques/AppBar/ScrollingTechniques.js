@@ -116,7 +116,7 @@ class ScrollingTechniques extends Component {
   };
 
   registerBlock = (key, elem) => {
-    console.log(elem)
+    // console.log(elem)
     this[key] = ReactDOM.findDOMNode(elem)
 
     if (elem && this.state[`${key}Height`] !== getHeight(elem)) {

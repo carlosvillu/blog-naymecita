@@ -15,7 +15,7 @@ const connector = (...usesCases) => Target => class DDDConnector extends PureCom
           [`${usecase}`]: result,
           [`${usecase}_params`]: params
         })
-      })
+      }).dispose
     })
   }
 

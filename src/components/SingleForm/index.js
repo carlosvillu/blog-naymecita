@@ -37,14 +37,6 @@ const CLASSES = [
   {'letter': 'D'}
 ]
 
-// const STUDENT = {
-//   name: 'Carlos',
-//   surname: 'Villuendas',
-//   school: 'Tierno Galben',
-//   grade: '4º Primaria',
-//   letter: 'A'
-// }
-
 class SingleForm extends PureComponent {
   static displayName = 'SingleForm'
   static contextTypes = {

@@ -18,6 +18,8 @@ const removeEmpty = obj => {
   return obj
 }
 
+const objToArray = obj => obj ? Object.keys(obj).map(key => obj[key]) : obj
+
 export default class FireBaseStudentsRepository extends StudentsRepository {
   constructor ({config} = {}) {
     super({config})
@@ -70,10 +72,19 @@ export default class FireBaseStudentsRepository extends StudentsRepository {
   }
 
   async search ({term, grade} = {}) {
-    console.log({term, grade})
     const firebase = this._config.get('firebase')
     const snapshot = await firebase.database().ref(`/students`).once('value')
-    const students = snapshot.val()
-    return students
+    const students = objToArray(snapshot.val())
+
+    if (!term && !grade) { return students }
+
+    return students.filter(student => {
+      const { name, surname, title, description, consent } = student
+      const allow = field => consent ? field : null
+      const isInclude = [allow(name), allow(surname), title, description].reduce((isInclude, field) => {
+        return isInclude || (field || '').includes(term)
+      }, false)
+      return isInclude
+    })
   }
 }

@@ -11,8 +11,6 @@ import Search from '../../components/Search'
 
 import connector from '../../ddd-react'
 
-const objToArray = obj => obj ? Object.keys(obj).map(key => obj[key]) : obj
-
 const Home = ({history, list_studients_use_case: images}, {i18n}) => {
   return (
     <div className='Home'>
@@ -20,7 +18,7 @@ const Home = ({history, list_studients_use_case: images}, {i18n}) => {
         <AppBar title={i18n.t('TITLE')} showMenuIconButton={false} />
         <Content>
           <div className='Home-SearchWrapper'><Search /></div>
-          <div className='Home-GridWrapper'><Grid images={objToArray(images)} /></div>
+          <div className='Home-GridWrapper'><Grid images={images} /></div>
           <div className='Home-FAVWrapper'><FAVMenu onClickItem={({item}) => {
             const path = item === FAVMenu.ITEMS.SINGLE ? '/create/single' : '/create/multiples'
             history.push(path)

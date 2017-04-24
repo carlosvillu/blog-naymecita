@@ -193,7 +193,7 @@ class MultipleForm extends PureComponent {
           onConsentChange={({consent}) => {
             this.setState({consent})
           }}
-          label={i18n.t('WARNING_SINGLE_FORM')} />
+          label={i18n.t('WARNING_MULTIPLE_FORM')} />
       </div>
     )
   }
