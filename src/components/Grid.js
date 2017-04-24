@@ -6,13 +6,9 @@ import ImageLazyLoad from '@schibstedspain/sui-image-lazy-load'
 
 import {Link} from 'react-router-dom'
 
-// import '@schibstedspain/sui-image-lazy-load/lib/index.scss'
-
 const MQ = {maxWidth: 768}
-const IMAGES = Array.apply(null, Array(90))
-                    .map((_, id) => ({id, img: `https://unsplash.it/200/300/?random&__c=${Math.random()}`}))
 
-const Grid = ({images = IMAGES}) => (
+const Grid = ({images = []}) => (
   <Media query={MQ}>
     { matches => (
       <GridList
@@ -20,10 +16,10 @@ const Grid = ({images = IMAGES}) => (
         cellHeight='auto' >
         {images.map(tile => (
           <GridTile
-            key={tile.img}
+            key={tile.image}
           >
             <Link to={`/detail/${tile.id}`}>
-              <ImageLazyLoad aspectRatio={'16:9'} src={tile.img} />
+              <ImageLazyLoad aspectRatio={'16:9'} src={tile.image} />
             </Link>
           </GridTile>
         ))}
@@ -36,7 +32,7 @@ Grid.displayName = 'Grid'
 Grid.propTypes = {
   images: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
-    img: PropTypes.string.isRequired
+    image: PropTypes.string.isRequired
   }))
 }
 

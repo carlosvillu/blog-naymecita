@@ -1,3 +1,4 @@
+/* eslint no-console:0 */
 import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -9,27 +10,37 @@ import ExpandLess from 'material-ui/svg-icons/navigation/expand-less'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
-// import './index.scss'
-
 const GRADES = [
   {literal: 'GRADE_2', grade: 2},
   {literal: 'GRADE_4', grade: 4},
   {literal: 'GRADE_8', grade: 8}
 ]
 
+const lengthTerm = length => fn => ({term, grade}) => term.length >= length ? fn({term, grade}) : null
+const lengthTermThree = lengthTerm(3)
+const debounce = (fn, delay) => {
+  let timer
+  return (...args) => {
+    clearTimeout(timer)
+    timer = setTimeout(() => { fn.apply(null, args) }, delay)
+  }
+}
+
 class Search extends PureComponent {
   static displayName = 'Search'
   static contextTypes = {
-    i18n: PropTypes.object
+    i18n: PropTypes.object,
+    domain: PropTypes.object
   }
 
   state = {
     isExpanded: false,
+    term: null,
     grade: null
   }
 
   render () {
-    const {isExpanded} = this.state
+    const {isExpanded, term, grade} = this.state
     const {i18n} = this.context
     const advancedWrapperClassName = cx('Search-AdvancedWrapper', {
       'Search-AdvancedWrapper--isExpanded': isExpanded
@@ -39,7 +50,12 @@ class Search extends PureComponent {
       <div className='Search'>
         <Paper className='Search-InputWrapper'>
           <SearchIcon />
-          <input className='Search-Input' type='search' placeholder={i18n.t('SEARCH_PLACEHOLDER')} />
+          <input
+            value={term}
+            onChange={this._handleChangeField('term')}
+            className='Search-Input'
+            type='search'
+            placeholder={i18n.t('SEARCH_PLACEHOLDER')} />
           {isExpanded ? <ExpandLess onClick={this._toogleExpand} /> : <ExpandMore onClick={this._toogleExpand} />}
         </Paper>
         <Paper className={advancedWrapperClassName}>
@@ -47,8 +63,8 @@ class Search extends PureComponent {
             className='Search-GradeSelect'
             fullWidth
             floatingLabelText={i18n.t('GRADE')}
-            value={this.state.grade}
-            onChange={(event, index, value) => this.setState({grade: value})}
+            value={grade}
+            onChange={this._handleChangeField('grade')}
           >
             <MenuItem value={0} primaryText={i18n.t('SHOW_ALL')} />
             {GRADES.map(
@@ -58,6 +74,18 @@ class Search extends PureComponent {
         </Paper>
       </div>
     )
+  }
+
+  _search = debounce(lengthTermThree(({term, grade}) => {
+    const {domain} = this.context
+    domain.get('list_studients_use_case').execute({term, grade})
+  }), 250)
+
+  _handleChangeField = name => (event, index, value) => {
+    this.setState({[name]: value || event.target.value}, () => {
+      const {term, grade} = this.state
+      this._search({term, grade})
+    })
   }
 
   _toogleExpand = () => {

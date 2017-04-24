@@ -55,7 +55,8 @@ export default class FireBaseStudentsRepository extends StudentsRepository {
       consent,
       title,
       description,
-      image: imageStorage.downloadURL
+      image: imageStorage.downloadURL,
+      createdAt: Date.now()
     })
 
     await firebase.database().ref(`/students/${id}`).set(student)
@@ -66,5 +67,13 @@ export default class FireBaseStudentsRepository extends StudentsRepository {
     const firebase = this._config.get('firebase')
     const snapshot = await firebase.database().ref(`/students/${id}`).once('value')
     return snapshot.val()
+  }
+
+  async search ({term, grade} = {}) {
+    console.log({term, grade})
+    const firebase = this._config.get('firebase')
+    const snapshot = await firebase.database().ref(`/students`).once('value')
+    const students = snapshot.val()
+    return students
   }
 }

@@ -8,4 +8,8 @@ export default class StudentsRepository extends Repository {
   save () {
     throw new Error('[StudentsRepository#save] must be implemented')
   }
+
+  search () {
+    throw new Error('[StudentsRepository#search] must be implemented')
+  }
 }

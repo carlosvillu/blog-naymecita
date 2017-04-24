@@ -11,6 +11,7 @@ class Aralescriptura {
 
     this._map['save_studients_use_case'] = StudentsFactory.saveStudentsUseCase()
     this._map['get_studients_use_case'] = StudentsFactory.getStudentsUseCase()
+    this._map['list_studients_use_case'] = StudentsFactory.listStudentsUseCase()
   }
 
   get (key) {
