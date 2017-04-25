@@ -1,9 +1,6 @@
 .AddStudent {
-  &-FAV {
-    position: fixed;
-    top: 5.5vh;
-    left: 80vw;
-    z-index: 1;
+  &-Add {
+    margin: 15px;
   }
 
   &-formItem {

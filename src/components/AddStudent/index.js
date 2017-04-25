@@ -2,9 +2,8 @@ import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 
 import Dialog from 'material-ui/Dialog'
-import FloatingActionButton from 'material-ui/FloatingActionButton'
-import ContentAdd from 'material-ui/svg-icons/content/add'
 import FlatButton from 'material-ui/FlatButton'
+import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 
 import Media from 'react-media'
@@ -37,15 +36,14 @@ class AddStudent extends PureComponent {
 
     return (
       <div className='AddStudent'>
-        <FloatingActionButton
+        <RaisedButton
+          className='AddStudent-Add'
+          label={i18n.t('ADD')}
           secondary
-          className='AddStudent-FAV'
           disabled={disabled}
           onClick={() => {
             this.setState({open: true})
-          }}>
-          <ContentAdd />
-        </FloatingActionButton>
+          }} />
         <Media query={MQ}>
           { matches => (
             <Dialog

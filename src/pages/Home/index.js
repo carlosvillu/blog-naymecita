@@ -8,6 +8,7 @@ import AppCanvas, {Content} from '../../components/material-ui-scrolling-techniq
 import Grid from '../../components/Grid'
 import FAVMenu from '../../components/FAVMenu'
 import Search from '../../components/Search'
+import LoadingOverlay from '../../components/LoadingOverlay'
 
 import connector from '../../ddd-react'
 
@@ -25,6 +26,7 @@ const Home = ({history, list_studients_use_case: images}, {i18n}) => {
           }} /></div>
         </Content>
       </AppCanvas>
+      <LoadingOverlay display={!images} />
     </div>
   )
 }

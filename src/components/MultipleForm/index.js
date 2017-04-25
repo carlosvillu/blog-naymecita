@@ -19,49 +19,12 @@ import AddStudent from '../AddStudent'
 import ConsentToogle from '../ConsentToogle'
 import LoadingOverlay from '../LoadingOverlay'
 
-const SCHOOLS = [
-  {name: 'Tierno Galben'},
-  {name: 'Pablo Picasso'},
-  {name: 'Escuela 43'}
-]
-
-const GRADES = [
-  {grade: '2º Primaria'},
-  {grade: '4º Primaria'},
-  {grade: '2º ESO'}
-]
-
-const CLASSES = [
-  {'letter': 'A'},
-  {'letter': 'B'},
-  {'letter': 'C'},
-  {'letter': 'D'}
-]
-
 class MultipleForm extends PureComponent {
   static displayName = 'MultipleForm'
 
   static contextTypes = {
     i18n: PropTypes.object,
     domain: PropTypes.object
-  }
-
-  static propTypes = {
-    schools: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string
-    })),
-    grades: PropTypes.arrayOf(PropTypes.shape({
-      grade: PropTypes.string
-    })),
-    classes: PropTypes.arrayOf(PropTypes.shape({
-      'letter': PropTypes.string
-    }))
-  }
-
-  static defaultProps = {
-    schools: SCHOOLS,
-    grades: GRADES,
-    classes: CLASSES
   }
 
   state = {
@@ -74,7 +37,8 @@ class MultipleForm extends PureComponent {
     snackMsg: '',
     school: null,
     stepIndex: 0,
-    surname: ''
+    surname: '',
+    finished: false
   }
 
   render () {
@@ -87,7 +51,6 @@ class MultipleForm extends PureComponent {
             <StepLabel>{i18n.t('FIRST_STEP_MULTIPLE')}</StepLabel>
             <StepContent className='MultipleForm-FirstStepWrapper'>
               {this._firstStep}
-              {this._renderStepActions(0)}
             </StepContent>
           </Step>
 
@@ -95,7 +58,6 @@ class MultipleForm extends PureComponent {
             <StepLabel>{i18n.t('SECOND_STEP_MULTIPLE')}</StepLabel>
             <StepContent className='MultipleForm-FirstStepWrapper'>
               {this._secondStep}
-              {this._renderStepActions(1)}
             </StepContent>
           </Step>
 
@@ -103,32 +65,28 @@ class MultipleForm extends PureComponent {
             <StepLabel>{i18n.t('THIRD_STEP_MULTIPLE')}</StepLabel>
             <StepContent className='MultipleForm-FirstStepWrapper'>
               {this._thirdStep}
-              {this._renderStepActions(2)}
             </StepContent>
           </Step>
 
         </Stepper>
+        {this._renderStepActions(stepIndex)}
         <Snackbar
           open={!!snackMsg}
           message={i18n.t(snackMsg || '')}
           autoHideDuration={4000} />
         <LoadingOverlay display={displayOverlay} />
-        <AddStudent disabled={stepIndex !== 1} onStudentAdd={student => {
-          this.setState({
-            students: [
-              ...this.state.students,
-              student
-            ]
-          })
-        }} />
       </div>
     )
   }
 
   get _firstStep () {
-    const {i18n} = this.context
+    const {i18n, domain} = this.context
     const {name, surname, school, grade, letter} = this.state
-    const {schools, grades, classes} = this.props
+
+    const schools = domain.get('config').get('schools')
+    const grades = domain.get('config').get('grades')
+    const letters = domain.get('config').get('letters')
+
     return (
       <div className='MultipleForm-FirstStep'>
         <TextField
@@ -148,7 +106,7 @@ class MultipleForm extends PureComponent {
           value={school}
           onChange={this._handleChangeField('school')}
           floatingLabelText={i18n.t('LABEL_SCHOOLS_SELECT')}>
-          {schools.map(({name}) => <MenuItem key={name} value={name} primaryText={name} />)}
+          {schools.map(school => <MenuItem key={school} value={school} primaryText={i18n.t(school)} />)}
         </SelectField>
 
         <SelectField
@@ -156,7 +114,7 @@ class MultipleForm extends PureComponent {
           value={grade}
           onChange={this._handleChangeField('grade')}
           floatingLabelText={i18n.t('LABEL_GRADES_SELECT')}>
-          {grades.map(({grade}) => <MenuItem key={grade} value={grade} primaryText={grade} />)}
+          {grades.map(grade => <MenuItem key={grade} value={grade} primaryText={i18n.t(grade)} />)}
         </SelectField>
 
         <SelectField
@@ -164,14 +122,14 @@ class MultipleForm extends PureComponent {
           value={letter}
           onChange={this._handleChangeField('letter')}
           floatingLabelText={i18n.t('LABEL_CLASSES_SELECT')}>
-          {classes.map(({letter}) => <MenuItem key={letter} value={letter} primaryText={letter} />)}
+          {letters.map(letter => <MenuItem key={letter} value={letter} primaryText={i18n.t(letter)} />)}
         </SelectField>
       </div>
     )
   }
 
   get _secondStep () {
-    const {students} = this.state
+    const {students, stepIndex} = this.state
     return (
       <div className='MultipleForm-SecondStep'>
         {students.map(
@@ -183,6 +141,14 @@ class MultipleForm extends PureComponent {
               surname={surname}
               image={image} />
         )}
+        <AddStudent disabled={stepIndex !== 1} onStudentAdd={student => {
+          this.setState({
+            students: [
+              ...this.state.students,
+              student
+            ]
+          })
+        }} />
       </div>
     )
   }
@@ -239,7 +205,8 @@ class MultipleForm extends PureComponent {
       ).then(students => {
         this.setState({
           displayOverlay: false,
-          snackMsg: i18n.t('FORM_SAVED')
+          snackMsg: i18n.t('FORM_SAVED'),
+          finished: true
         })
       })
     }
@@ -266,12 +233,14 @@ class MultipleForm extends PureComponent {
 
   _renderStepActions = step => {
     const {i18n} = this.context
-    const {stepIndex} = this.state
+    const {stepIndex, finished} = this.state
+
+    if (finished) { return null }
 
     return (
-      <div style={{margin: '12px 0'}}>
+      <div style={{margin: '12px 0', padding: '14px'}}>
         <RaisedButton
-          label={i18n.t(stepIndex === 2 ? 'SAVE' : 'NEXT')}
+          label={i18n.t(stepIndex >= 2 ? 'SAVE' : 'NEXT')}
           disabled={this._shouldDisableAction(step)}
           disableTouchRipple
           disableFocusRipple

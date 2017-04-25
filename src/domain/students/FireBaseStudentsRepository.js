@@ -74,7 +74,7 @@ export default class FireBaseStudentsRepository extends StudentsRepository {
   async search ({term, grade} = {}) {
     const firebase = this._config.get('firebase')
     const snapshot = await firebase.database().ref(`/students`).once('value')
-    const students = objToArray(snapshot.val())
+    const students = (objToArray(snapshot.val()) || [])
 
     if (!term && !grade) { return students }
 
@@ -91,6 +91,6 @@ export default class FireBaseStudentsRepository extends StudentsRepository {
       if (!grade) { return isInclude }
 
       return isInclude && student.grade === grade
-    })
+    }).sort((a, b) => parseInt(b.createdAt, 10) - parseInt(a.createdAt, 10))
   }
 }
