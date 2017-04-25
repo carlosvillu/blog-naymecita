@@ -8,5 +8,8 @@
     margin-left: 2px;
     margin-top: 2px;
     margin-bottom: 5px;
+    @media (min-width: $mobile-width) {
+      width: 48%;
+    }
   }
 }

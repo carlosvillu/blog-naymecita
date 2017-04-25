@@ -1,0 +1,8 @@
+.MultipleForm {
+  &-FirstStepField {
+    @media (min-width: $mobile-width) {
+      margin-right: 10px;
+      width: 48% !important;
+    }
+  }
+}

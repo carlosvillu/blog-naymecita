@@ -12,7 +12,7 @@ const Grid = ({images = []}) => (
   <Media query={MQ}>
     { matches => (
       <GridList
-        cols={matches ? 3 : 6}
+        cols={matches ? 3 : 4}
         cellHeight='auto' >
         {images.map(tile => (
           <GridTile

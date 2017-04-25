@@ -1,9 +1,13 @@
+@import './vars';
+
 @import '~@schibstedspain/sui-image-lazy-load/lib/index.scss';
 @import './components/react-mfb/mfb.scss';
 
+@import './components/Root/index.scss';
 @import './components/ImageSelect/index.scss';
 @import './components/Search/index.scss';
 @import './components/SingleForm/index.scss';
+@import './components/MultipleForm/index.scss';
 @import './components/StudentCard/index.scss';
 @import './components/AddStudent/index.scss';
 @import './components/ConsentToogle/index.scss';

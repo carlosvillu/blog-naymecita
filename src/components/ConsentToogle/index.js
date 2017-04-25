@@ -13,7 +13,7 @@ const ConsentToogle = ({consent, onConsentChange, label}, {i18n}) => {
       <Toggle
         className={classNameToggle}
         toggled={consent}
-        labelPosition='rigth'
+        labelPosition='right'
         onToggle={() => onConsentChange({consent: !consent})}
         label={label} />
     </div>

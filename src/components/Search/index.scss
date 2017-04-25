@@ -17,7 +17,8 @@
     background-color: transparent;
     border: 0px solid;
     padding: 10px;
-    width: 80%;
+    width: 100% !important;
+    font-size: 14px;
   }
 
   &-AdvancedWrapper {
@@ -26,9 +27,15 @@
     padding: 5px;
 
     &--isExpanded {
-      display: block;
       margin-top: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+  }
+
+  &-GradeSelect {
+    width: 90% !important;
   }
 }
 

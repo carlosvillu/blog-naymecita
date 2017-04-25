@@ -10,12 +10,6 @@ import ExpandLess from 'material-ui/svg-icons/navigation/expand-less'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
-const GRADES = [
-  {literal: 'GRADE_2', grade: 2},
-  {literal: 'GRADE_4', grade: 4},
-  {literal: 'GRADE_8', grade: 8}
-]
-
 const lengthTerm = length => fn => ({term, grade}) => !term || term.length >= length ? fn({term, grade}) : null
 const lengthTermThree = lengthTerm(3)
 const debounce = (fn, delay) => {
@@ -35,8 +29,8 @@ class Search extends PureComponent {
 
   state = {
     isExpanded: false,
-    term: null,
-    grade: null
+    term: '',
+    grade: ''
   }
 
   componentDidMount () {
@@ -46,7 +40,8 @@ class Search extends PureComponent {
 
   render () {
     const {isExpanded, term, grade} = this.state
-    const {i18n} = this.context
+    const {i18n, domain} = this.context
+    const grades = domain.get('config').get('grades')
     const advancedWrapperClassName = cx('Search-AdvancedWrapper', {
       'Search-AdvancedWrapper--isExpanded': isExpanded
     })
@@ -72,8 +67,8 @@ class Search extends PureComponent {
             onChange={this._handleChangeField('grade')}
           >
             <MenuItem value={0} primaryText={i18n.t('SHOW_ALL')} />
-            {GRADES.map(
-              ({literal, grade}) => <MenuItem key={grade} value={grade} primaryText={i18n.t(literal)} />
+            {grades.map(
+              (grade) => <MenuItem key={grade} value={grade} primaryText={i18n.t(grade)} />
             )}
           </SelectField>
         </Paper>

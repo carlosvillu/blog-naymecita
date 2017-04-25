@@ -81,10 +81,16 @@ export default class FireBaseStudentsRepository extends StudentsRepository {
     return students.filter(student => {
       const { name, surname, title, description, consent } = student
       const allow = field => consent ? field : null
+
+      if (!term) { return student.grade === grade }
+
       const isInclude = [allow(name), allow(surname), title, description].reduce((isInclude, field) => {
         return isInclude || (field || '').includes(term)
       }, false)
-      return isInclude
+
+      if (!grade) { return isInclude }
+
+      return isInclude && student.grade === grade
     })
   }
 }

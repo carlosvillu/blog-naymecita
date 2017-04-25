@@ -1,6 +1,9 @@
 .ConsentToogle {
   &-Toggle {
     padding: 5px;
+    @media (min-width: $mobile-width) {
+      width: 396px !important;
+    }
 
     &--isActive {
       background-color: rgba(244, 67, 54, 0.09);

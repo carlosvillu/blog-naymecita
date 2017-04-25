@@ -5,4 +5,11 @@
     left: 80vw;
     z-index: 1;
   }
+
+  &-formItem {
+    @media (min-width: $mobile-width) {
+      margin-right: 10px;
+      width: 48%;
+    }
+  }
 }

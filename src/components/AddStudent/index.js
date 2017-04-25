@@ -7,14 +7,18 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import FlatButton from 'material-ui/FlatButton'
 import TextField from 'material-ui/TextField'
 
+import Media from 'react-media'
+
 import ImageSelect from '../ImageSelect'
 
 const INITIAL_STATE = {
   open: false,
-  name: null,
-  surname: null,
+  name: '',
+  surname: '',
   image: false
 }
+const MQ = {maxWidth: 768}
+
 class AddStudent extends PureComponent {
   static contextTypes = {
     i18n: PropTypes.object
@@ -42,32 +46,37 @@ class AddStudent extends PureComponent {
           }}>
           <ContentAdd />
         </FloatingActionButton>
-        <Dialog
-          title={i18n.t('ADD_STUDENT_DIALOG_TITLE')}
-          contentStyle={{
-            width: '100%',
-            maxWidth: 'none'
-          }}
-          actions={[
-            <FlatButton
-              label={i18n.t('CANCEL')}
-              onTouchTap={() => this.setState(INITIAL_STATE)}
-            />,
-            <FlatButton
-              label={i18n.t('ADD_STUDENT')}
-              primary
-              disabled={this._shouldDisableAction()}
-              onTouchTap={() => {
-                const {name, surname, image} = this.state
-                onStudentAdd({name, surname, image})
-                this.setState(INITIAL_STATE)
-              }}
-            />
-          ]}
-          modal
-          open={open}>
-          {this._form}
-        </Dialog>
+        <Media query={MQ}>
+          { matches => (
+            <Dialog
+              className='AddStudent-Dialog'
+              title={i18n.t('ADD_STUDENT_DIALOG_TITLE')}
+              contentStyle={matches ? {
+                width: '100%',
+                maxWidth: 'none'
+              } : {}}
+              actions={[
+                <FlatButton
+                  label={i18n.t('CANCEL')}
+                  onTouchTap={() => this.setState(INITIAL_STATE)}
+                />,
+                <FlatButton
+                  label={i18n.t('ADD_STUDENT')}
+                  primary
+                  disabled={this._shouldDisableAction()}
+                  onTouchTap={() => {
+                    const {name, surname, image} = this.state
+                    onStudentAdd({name, surname, image})
+                    this.setState(INITIAL_STATE)
+                  }}
+                />
+              ]}
+              modal
+              open={open}>
+              {this._form}
+            </Dialog>
+          ) }
+        </Media>
       </div>
     )
   }
@@ -78,10 +87,12 @@ class AddStudent extends PureComponent {
     return (
       <div className='AddStudent-form'>
         <TextField
+          className='AddStudent-formItem'
           value={name}
           onChange={this._handleChangeField('name')}
           floatingLabelText={!name ? i18n.t('LABEL_NAME_INPUT') : false} />
         <TextField
+          className='AddStudent-formItem'
           value={surname}
           onChange={this._handleChangeField('surname')}
           floatingLabelText={!surname ? i18n.t('LABEL_SURNAME_INPUT') : false} />

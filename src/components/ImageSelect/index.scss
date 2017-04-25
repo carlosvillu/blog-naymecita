@@ -1,4 +1,8 @@
 .ImageSelect {
+  @media (min-width: $mobile-width) {
+    max-width: 50%;
+  }
+
   &-Label {
     padding: 15px;
   }

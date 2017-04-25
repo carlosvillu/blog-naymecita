@@ -34,7 +34,7 @@ Home.contextTypes = {
   i18n: PropTypes.object
 }
 Home.propTypes = {
-  list_studients_use_case: PropTypes.object,
+  list_studients_use_case: PropTypes.array,
   history: PropTypes.shape({
     push: PropTypes.func
   })

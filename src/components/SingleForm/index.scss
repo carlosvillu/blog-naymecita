@@ -6,4 +6,25 @@
       background-color: rgba(244, 67, 54, 0.09);
     }
   }
+
+  &-FirstStepField,
+  &-ThridStepField {
+    @media (min-width: $mobile-width) {
+      margin-right: 10px;
+    }
+  }
+
+  &-FirstStepField {
+    @media (min-width: $mobile-width) {
+      width: 48% !important;
+    }
+  }
+
+  &-ThridStepField {
+    @media (min-width: $mobile-width) {
+      width: 50% !important;
+    }
+  }
+
+
 }

@@ -1,4 +1,8 @@
 .StudientAdvancedCard {
+  @media (min-width: $mobile-width) {
+    padding: 50px;
+  }
+
   &-FAV {
     position: fixed;
     top: 5.5vh;

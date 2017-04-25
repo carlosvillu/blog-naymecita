@@ -18,7 +18,11 @@ class ImageSelect extends PureComponent {
   static propTypes = {
     onChangeImage: PropTypes.func,
     deletable: PropTypes.bool,
-    image: PropTypes.object
+    image: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.string,
+      PropTypes.object
+    ])
   }
 
   static defaultProps = {

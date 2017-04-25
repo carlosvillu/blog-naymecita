@@ -70,11 +70,11 @@ class MultipleForm extends PureComponent {
     displayOverlay: false,
     grade: null,
     letter: null,
-    name: null,
-    snackMsg: null,
+    name: '',
+    snackMsg: '',
     school: null,
     stepIndex: 0,
-    surname: null
+    surname: ''
   }
 
   render () {
@@ -132,16 +132,19 @@ class MultipleForm extends PureComponent {
     return (
       <div className='MultipleForm-FirstStep'>
         <TextField
+          className='MultipleForm-FirstStepField'
           value={name}
           onChange={this._handleChangeField('name')}
           floatingLabelText={!name ? i18n.t('LABEL_NAME_INPUT') : false} />
 
         <TextField
+          className='MultipleForm-FirstStepField'
           value={surname}
           onChange={this._handleChangeField('surname')}
           floatingLabelText={!surname ? i18n.t('LABEL_SURNAME_INPUT') : false} />
 
         <SelectField
+          className='MultipleForm-FirstStepField'
           value={school}
           onChange={this._handleChangeField('school')}
           floatingLabelText={i18n.t('LABEL_SCHOOLS_SELECT')}>
@@ -149,6 +152,7 @@ class MultipleForm extends PureComponent {
         </SelectField>
 
         <SelectField
+          className='MultipleForm-FirstStepField'
           value={grade}
           onChange={this._handleChangeField('grade')}
           floatingLabelText={i18n.t('LABEL_GRADES_SELECT')}>
@@ -156,6 +160,7 @@ class MultipleForm extends PureComponent {
         </SelectField>
 
         <SelectField
+          className='MultipleForm-FirstStepField'
           value={letter}
           onChange={this._handleChangeField('letter')}
           floatingLabelText={i18n.t('LABEL_CLASSES_SELECT')}>
@@ -232,7 +237,6 @@ class MultipleForm extends PureComponent {
           student => domain.get('save_studients_use_case').execute(student)
         )
       ).then(students => {
-        console.log({students})
         this.setState({
           displayOverlay: false,
           snackMsg: i18n.t('FORM_SAVED')

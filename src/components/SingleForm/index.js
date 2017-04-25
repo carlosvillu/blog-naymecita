@@ -18,25 +18,6 @@ import ImageSelect from '../ImageSelect'
 import ConsentToogle from '../ConsentToogle'
 import LoadingOverlay from '../LoadingOverlay'
 
-const SCHOOLS = [
-  {name: 'Tierno Galben'},
-  {name: 'Pablo Picasso'},
-  {name: 'Escuela 43'}
-]
-
-const GRADES = [
-  {grade: '2º Primaria'},
-  {grade: '4º Primaria'},
-  {grade: '2º ESO'}
-]
-
-const CLASSES = [
-  {'letter': 'A'},
-  {'letter': 'B'},
-  {'letter': 'C'},
-  {'letter': 'D'}
-]
-
 class SingleForm extends PureComponent {
   static displayName = 'SingleForm'
   static contextTypes = {
@@ -44,36 +25,22 @@ class SingleForm extends PureComponent {
     domain: PropTypes.object
   }
   static propTypes = {
-    schools: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string
-    })),
-    grades: PropTypes.arrayOf(PropTypes.shape({
-      grade: PropTypes.string
-    })),
-    classes: PropTypes.arrayOf(PropTypes.shape({
-      'letter': PropTypes.string
-    })),
     onCreateStudent: PropTypes.func
-  }
-  static defaultProps = {
-    schools: SCHOOLS,
-    grades: GRADES,
-    classes: CLASSES
   }
 
   state = {
     consent: false,
-    description: null,
+    description: '',
     displayOverlay: false,
     grade: null,
-    image: false,
+    image: null,
     letter: null,
-    name: null,
-    snackMsg: null,
+    name: '',
+    snackMsg: '',
     school: null,
     stepIndex: 0,
-    surname: null,
-    title: null
+    surname: '',
+    title: ''
   }
 
   render () {
@@ -118,7 +85,7 @@ class SingleForm extends PureComponent {
 
         </Stepper>
         <Snackbar
-          open={snackMsg}
+          open={!!snackMsg}
           action={id ? i18n.t('SEE') : false}
           onActionTouchTap={() => id && onCreateStudent(id)}
           message={i18n.t(snackMsg)}
@@ -129,41 +96,49 @@ class SingleForm extends PureComponent {
   }
 
   get _firstStep () {
-    const {i18n} = this.context
-    const {schools, grades, classes} = this.props
+    const {i18n, domain} = this.context
     const {name, surname, school, grade, letter} = this.state
+
+    const schools = domain.get('config').get('schools')
+    const grades = domain.get('config').get('grades')
+    const letters = domain.get('config').get('letters')
 
     return (
       <div className='SingleForm-FirstStep'>
         <TextField
+          className='SingleForm-FirstStepField'
           value={name}
           onChange={this._handleChangeField('name')}
           floatingLabelText={!name ? i18n.t('LABEL_NAME_INPUT') : false} />
 
         <TextField
+          className='SingleForm-FirstStepField'
           value={surname}
           onChange={this._handleChangeField('surname')}
           floatingLabelText={!surname ? i18n.t('LABEL_SURNAME_INPUT') : false} />
 
         <SelectField
+          className='SingleForm-FirstStepField'
           value={school}
           onChange={this._handleChangeField('school')}
           floatingLabelText={i18n.t('LABEL_SCHOOLS_SELECT')}>
-          {schools.map(({name}) => <MenuItem key={name} value={name} primaryText={name} />)}
+          {schools.map(school => <MenuItem key={school} value={school} primaryText={i18n.t(school)} />)}
         </SelectField>
 
         <SelectField
+          className='SingleForm-FirstStepField'
           value={grade}
           onChange={this._handleChangeField('grade')}
           floatingLabelText={i18n.t('LABEL_GRADES_SELECT')}>
-          {grades.map(({grade}) => <MenuItem key={grade} value={grade} primaryText={grade} />)}
+          {grades.map(grade => <MenuItem key={grade} value={grade} primaryText={i18n.t(grade)} />)}
         </SelectField>
 
         <SelectField
+          className='SingleForm-FirstStepField'
           value={letter}
           onChange={this._handleChangeField('letter')}
           floatingLabelText={i18n.t('LABEL_CLASSES_SELECT')}>
-          {classes.map(({letter}) => <MenuItem key={letter} value={letter} primaryText={letter} />)}
+          {letters.map(letter => <MenuItem key={letter} value={letter} primaryText={i18n.t(letter)} />)}
         </SelectField>
       </div>
     )
@@ -176,10 +151,12 @@ class SingleForm extends PureComponent {
     return (
       <div className='SingleForm-ThirdStep'>
         <TextField
+          className='SingleForm-ThridStepField'
           value={title}
           onChange={this._handleChangeField('title')}
           floatingLabelText={!title ? i18n.t('LABEL_TITLE_INPUT') : false} />
         <TextField
+          className='SingleForm-ThridStepField'
           value={description}
           onChange={this._handleChangeField('description')}
           multiLine
