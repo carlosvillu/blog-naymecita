@@ -9,7 +9,7 @@
     "lint:js": "linting-rules js --ignore-pattern public --ignore-pattern material-ui-scrolling-techniques --fix",
     "start": "PORT=2017 suistudio-webpack dev",
     "deploy": "npm run -s build && now && now alias $(pbpaste) blog.aralescriptura.cat",
-    "now-start": "serve ./public -s -c 31556952000",
+    "now-start": "PORT=2017 NODE_ENV=production ssr ./src",
     "now-build": "true",
     "co": "npm run -s lint && git commit"
   },
@@ -18,6 +18,7 @@
   "license": "ISC",
   "devDependencies": {
     "@schibstedspain/linting-rules": "1",
+    "@schibstedspain/ssr": "1",
     "@schibstedspain/suistudio-webpack": "2",
     "serve": "5.1.4"
   },
