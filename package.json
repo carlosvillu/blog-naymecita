@@ -8,7 +8,7 @@
     "lint": "npm run -s lint:js",
     "lint:js": "linting-rules js --ignore-pattern public --ignore-pattern material-ui-scrolling-techniques --fix",
     "start": "PORT=2017 suistudio-webpack dev",
-    "deploy": "npm run -s build && now && now alias $(pbpaste) blog.aralescriptura.cat",
+    "deploy": "npm run -s build && cp src/images/*.* public/ && now && now alias $(pbpaste) blog.aralescriptura.cat",
     "now-start": "PORT=2017 NODE_ENV=production ssr ./src",
     "now-build": "true",
     "co": "npm run -s lint && git commit"

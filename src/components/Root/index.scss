@@ -1,6 +1,20 @@
+$color-footer-background: #212121;
+$color-footer-heart: #ef5350;
+
 #root {
-  @media (min-width: $mobile-width) {
-    margin: auto;
-    max-width: 960px;
+  // https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer
+  .Root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    &-children {
+      flex: 1;
+      padding: 0 16px;
+      position: relative;
+    }
+
+    &-footer {
+    }
   }
 }

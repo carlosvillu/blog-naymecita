@@ -1,0 +1,34 @@
+$color-footer-background: #212121;
+$color-footer-heart: #ef5350;
+
+.Footer {
+  align-items: center;
+  background: $color-footer-background;
+  color: rgba(255, 255, 255, .541176);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 16px;
+  width: 100%;
+
+  &-heart {
+    color: $color-footer-heart !important;
+    margin-left: 5px;
+  }
+
+  &-Claim {
+    margin: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  &-Image {
+    margin: 10px;
+  }
+
+  &-Name {
+    margin: 0 5px;
+    color: rgba(255, 255, 255, 0.541176);
+    text-decoration: none;
+  }
+}

@@ -1,5 +1,8 @@
 export default {
   TITLE: 'Blog El que penses compta!',
+  HANDMADE_WITH: 'fet amb',
+  BY: 'per',
+  ADD: 'afegir',
   ADD_MULTIPLE_DOCS: 'Penjar múltiples textos',
   ADD_SINGLE_DOC: 'Penjar 1 text',
   SEARCH_PLACEHOLDER: 'títol, descripció, nom ...',

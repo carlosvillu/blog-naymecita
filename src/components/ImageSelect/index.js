@@ -7,8 +7,6 @@ import Delete from 'material-ui/svg-icons/action/delete'
 
 import ImageLazyLoad from '@schibstedspain/sui-image-lazy-load'
 
-// import './index.scss'
-
 class ImageSelect extends PureComponent {
   static displayName = 'ImageSelect'
   static contextTypes = {

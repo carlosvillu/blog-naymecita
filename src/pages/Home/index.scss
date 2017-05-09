@@ -1,0 +1,9 @@
+.Home {
+  &-SearchWrapper {
+    @media (min-width: $mobile-width) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

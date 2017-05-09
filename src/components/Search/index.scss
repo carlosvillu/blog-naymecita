@@ -1,5 +1,8 @@
 .Search {
   margin: 10px 0;
+  @media (min-width: $mobile-width) {
+    width: 50%;
+  }
 
   &-InputWrapper {
     align-items: center;

@@ -1,8 +1,10 @@
 @import './vars';
 
 @import '~@schibstedspain/sui-image-lazy-load/lib/index.scss';
-@import './components/react-mfb/mfb.scss';
 
+@import './pages/Home/index.scss';
+
+@import './components/react-mfb/mfb.scss';
 @import './components/Root/index.scss';
 @import './components/ImageSelect/index.scss';
 @import './components/Search/index.scss';
@@ -14,3 +16,4 @@
 @import './components/Loading/index.scss';
 @import './components/StudientAdvancedCard/index.scss';
 @import './components/LoadingOverlay/index.scss';
+@import './components/Footer/index.scss';

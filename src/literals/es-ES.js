@@ -1,5 +1,8 @@
 export default {
   TITLE: 'Blog Lo que piensas ¡cuenta!',
+  HANDMADE_WITH: 'Hecho con',
+  BY: 'por',
+  ADD: 'Añadir',
   ADD_MULTIPLE_DOCS: 'Subir múltiples textos',
   ADD_SINGLE_DOC: 'Subir 1 texto',
   SEARCH_PLACEHOLDER: 'título, descripción, nombre ...',
