@@ -19,6 +19,9 @@ class Aralescriptura {
                           : {execute: () => Promise.reject(new Error(`[Aralescriptura#get] ${key} not defined`))}
   }
 
+  // Export all the use cases
+  get useCases () { return this._map }
+
   config (key, value) {
     this._config.set(key, value)
     return this

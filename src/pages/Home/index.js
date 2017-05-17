@@ -10,23 +10,29 @@ import FAVMenu from '../../components/FAVMenu'
 import Search from '../../components/Search'
 import LoadingOverlay from '../../components/LoadingOverlay'
 
-import connector from '../../ddd-react'
+import {calls, services, pipe} from '@schibstedspain/ddd-react-redux'
 
-const Home = ({history, list_studients_use_case: images}, {i18n}) => {
+const Home = ({
+  history,
+  listStudients,
+  listStudientsParams,
+  listStudientsUseCase
+}, {i18n}) => {
+  listStudients === undefined && listStudientsUseCase()
   return (
     <div className='Home'>
       <AppCanvas scrollingTechniques>
         <AppBar title={i18n.t('TITLE')} showMenuIconButton={false} />
         <Content>
           <div className='Home-SearchWrapper'><Search /></div>
-          <div className='Home-GridWrapper'><Grid images={images} /></div>
+          <div className='Home-GridWrapper'><Grid images={listStudients} /></div>
           <div className='Home-FAVWrapper'><FAVMenu onClickItem={({item}) => {
             const path = item === FAVMenu.ITEMS.SINGLE ? '/create/single' : '/create/multiples'
             history.push(path)
           }} /></div>
         </Content>
       </AppCanvas>
-      <LoadingOverlay display={!images} />
+      <LoadingOverlay display={listStudients === undefined} />
     </div>
   )
 }
@@ -36,10 +42,15 @@ Home.contextTypes = {
   i18n: PropTypes.object
 }
 Home.propTypes = {
-  list_studients_use_case: PropTypes.array,
+  listStudients: PropTypes.array,
+  listStudientsParams: PropTypes.object,
+  listStudientsUseCase: PropTypes.func,
   history: PropTypes.shape({
     push: PropTypes.func
   })
 }
 
-export default connector('list_studients_use_case')(Home)
+export default pipe(
+  calls('list_studients_use_case'),
+  services('list_studients_use_case')
+)(Home)

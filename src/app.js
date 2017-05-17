@@ -8,7 +8,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import { AppContainer } from 'react-hot-loader'
 import firebase from 'firebase'
 
-import Provider from './components/Provider'
+import {Provider} from '@schibstedspain/ddd-react-redux'
 import i18n from './literals'
 import Root from './components/Root'
 import Aralescriptura from './domain'

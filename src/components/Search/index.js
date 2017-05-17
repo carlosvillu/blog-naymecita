@@ -10,6 +10,8 @@ import ExpandLess from 'material-ui/svg-icons/navigation/expand-less'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
+import {services, configs, pipe} from '@schibstedspain/ddd-react-redux'
+
 const lengthTerm = length => fn => ({term, grade}) => !term || term.length >= length ? fn({term, grade}) : null
 const lengthTermThree = lengthTerm(3)
 const debounce = (fn, delay) => {
@@ -26,6 +28,10 @@ class Search extends PureComponent {
     i18n: PropTypes.object,
     domain: PropTypes.object
   }
+  static propTypes = {
+    listStudientsUseCase: PropTypes.func,
+    gradesConfig: PropTypes.array
+  }
 
   state = {
     isExpanded: false,
@@ -33,15 +39,12 @@ class Search extends PureComponent {
     grade: ''
   }
 
-  componentDidMount () {
-    const {term, grade} = this.state
-    this._search({term, grade})
-  }
-
   render () {
     const {isExpanded, term, grade} = this.state
-    const {i18n, domain} = this.context
-    const grades = domain.get('config').get('grades')
+    const {i18n} = this.context
+    const {gradesConfig} = this.props
+
+    const grades = gradesConfig
     const advancedWrapperClassName = cx('Search-AdvancedWrapper', {
       'Search-AdvancedWrapper--isExpanded': isExpanded
     })
@@ -77,8 +80,8 @@ class Search extends PureComponent {
   }
 
   _search = debounce(lengthTermThree(({term, grade}) => {
-    const {domain} = this.context
-    domain.get('list_studients_use_case').execute({term, grade})
+    const {listStudientsUseCase} = this.props
+    listStudientsUseCase({term, grade})
   }), 250)
 
   _handleChangeField = name => (event, index, value) => {
@@ -97,6 +100,7 @@ class Search extends PureComponent {
   }
 }
 
-Search.displayName = 'Search'
-
-export default Search
+export default pipe(
+  services('list_studients_use_case'),
+  configs('grades')
+)(Search)

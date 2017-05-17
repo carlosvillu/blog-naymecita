@@ -23,9 +23,10 @@
     "serve": "5.1.4"
   },
   "dependencies": {
-    "@schibstedspain/cv-decorators": "1.4.2",
-    "@schibstedspain/rosetta": "3.10.1",
-    "@schibstedspain/sui-image-lazy-load": "1.4.0",
+    "@schibstedspain/cv-decorators": "1",
+    "@schibstedspain/ddd-react-redux": "1",
+    "@schibstedspain/rosetta": "3",
+    "@schibstedspain/sui-image-lazy-load": "1",
     "classnames": "2.2.5",
     "firebase": "3.8.0",
     "material-ui": "0.17.4",
